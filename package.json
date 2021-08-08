@@ -1,0 +1,45 @@
+{
+  "name": "bn-balance-calculator",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/dushimeemma/bn-balance-calculator.git",
+  "author": "Emmanuel Dushime",
+  "license": "MIT",
+  "scripts": {
+    "start": "NODE_ENV=production yarn run migrate:dev && NODE_ENV=production yarn run build && NODE_ENV=production node dist/index.js",
+    "dev": "NODE_ENV=development yarn run migrate:dev && NODE_ENV=development nodemon --exec babel-node src/index.js",
+    "build": "babel src --out-dir dist",
+    "test": "NODE_ENV=test yarn run migrate:test && NODE_ENV=test nyc --reporter=html --reporter=text mocha --timeout 10000 -r @babel/register tests/*  --exit",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "migrate:test": "node_modules/.bin/sequelize db:migrate:undo:all && node_modules/.bin/sequelize db:migrate",
+    "migrate:dev": "node_modules/.bin/sequelize db:migrate"
+  },
+  "dependencies": {
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.15.0",
+    "@babel/node": "^7.14.9",
+    "@babel/plugin-transform-runtime": "^7.15.0",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.15.0",
+    "@babel/register": "^7.14.5",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "joi": "^17.4.2",
+    "jsonwebtoken": "^8.5.1",
+    "nodemon": "^2.0.12",
+    "path": "^0.12.7",
+    "pg": "^8.7.1",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "5",
+    "sequelize-cli": "^6.2.0"
+  },
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "chai-http": "^4.3.0",
+    "coveralls": "^3.1.1",
+    "mocha": "^9.0.3",
+    "nyc": "^15.1.0"
+  }
+}
